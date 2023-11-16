@@ -1,0 +1,21 @@
+{
+  "name": "news-explorer-backend",
+  "version": "1.0.0",
+  "description": "backend for my final project",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajar67/news-explorer-backend.git"
+  },
+  "author": "anthony ranieri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajar67/news-explorer-backend/issues"
+  },
+  "homepage": "https://github.com/ajar67/news-explorer-backend#readme"
+}
