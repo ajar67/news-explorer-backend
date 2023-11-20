@@ -1,13 +1,68 @@
-const Article = require('../models/article');
-
-const getSavedArticles = (req, res, next) => {
-  Article.find({});
-};
+const Article = require("../models/article");
+const {
+  BadRequestError,
+  ForbiddenError,
+  NotFoundError,
+} = require("../utils/errors");
 
 const createArticle = (req, res, next) => {
-  const {keyword, title, text, date, source, link, image} = req.body;
+  //POST
+  const { keyword, title, text, date, source, link, image } = req.body;
+  Article.create({
+    keyword: keyword,
+    title: title,
+    text: text,
+    date: date,
+    source: source,
+    link: link,
+    image: image,
+  })
+    .then((item) => {
+      console.log(item);
+      res.status(200).send({ date: item });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "CastError") {
+        next(new BadRequestError("Invalid ID!"));
+      }
+      if (err.name === "ValidationError") {
+        next(new BadRequestError("Invalid ID!"));
+      }
+      next(err);
+    });
 };
 
 const deleteArticle = (req, res, next) => {
-  const {_id} = req.params;
+  //DELETE
+  const { itemId } = req.params;
+  Article.findById(itemId)
+    .orFail(() => {
+      throw new Error("Item id is not found.");
+    })
+    .then((item) => {
+      console.log(item);
+      if (!item.owner.contains(req.user._id)) {
+        throw new Error("Access to this resource is forbidden.");
+      }
+      return item.deleteOne().then(() => {
+        res.status(200).send({ message: "item was deleted" });
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "CastError") {
+        next(new BadRequestError("Invalid ID!"));
+      }
+      if (err.message === "Item id is not found.") {
+        next(new NotFoundError("Id is not found in the database!"));
+      }
+      if (err.message === "Access to this resource is forbidden.") {
+        next(new ForbiddenError("Access to this resource is forbidden."));
+      }
+
+      next(err);
+    });
 };
+
+module.exports = { createArticle, deleteArticle };

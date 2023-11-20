@@ -3,15 +3,22 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const {
+  BadRequestError,
+  UnauthorizedError,
+  NotFoundError,
+  ConflictError,
+} = require("../utils/errors");
+
 const jwtSecret =
   process.env.JWT_SECRET || "4buguiueirgrgkgkfjndffnfbhewwygurgfdhrghfv";
 
 const createUser = (req, res, next) => {
-  const { email, password, name } = req.body; //route for signup POST, should declare route in app.js
+  const { email, password, name } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (!email) {
-        throw new Error("Validation");
+        throw new Error("Validation Error");
       }
       if (user) {
         throw new Error("Email already exists!");
@@ -28,15 +35,20 @@ const createUser = (req, res, next) => {
           res.status(200).send({ email: res.email, name: res.name });
         })
         .catch((err) => {
-          console.log(err); //gonna need all errors here******************
-          //look into next(err)
-          //it will take next middleware from app.js
+          console.error(err);
+          if (err.message === "Email already exists!") {
+            next(new ConflictError("Email already exists!"));
+          }
+          if (err.name === "ValidationError") {
+            next(new BadRequestError("Invalid data!"));
+          }
+
+          next(err);
         });
     });
 };
 
 const login = (req, res, next) => {
-  //route should be /signin in app.js POST
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
@@ -44,13 +56,13 @@ const login = (req, res, next) => {
         token: jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: "7d" }),
       });
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error(err);
       next(new UnauthorizedError("Invalid Credentials!"));
     });
 };
 
 const getCurrentUser = (req, res, next) => {
-  //returns information about logged-in user GET /users/me
   const currentUser = req.user._id; //have to look may need to be just id
   User.findById(currentUser)
     .orFail(() => {
@@ -60,6 +72,7 @@ const getCurrentUser = (req, res, next) => {
     })
     .then((result) => res.status(200).send({ data: result }))
     .catch((err) => {
+      console.error(err);
       if (err.name === "CastError") {
         next(new BadRequestError("Invalid data!"));
       }
@@ -70,3 +83,5 @@ const getCurrentUser = (req, res, next) => {
       next(err);
     });
 };
+
+module.exports = { createUser, login, getCurrentUser };
