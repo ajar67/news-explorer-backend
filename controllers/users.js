@@ -14,6 +14,7 @@ const jwtSecret =
   process.env.JWT_SECRET || "4buguiueirgrgkgkfjndffnfbhewwygurgfdhrghfv";
 
 const createUser = (req, res, next) => {
+  console.log({ body: req.body });
   const { email, password, name } = req.body;
   User.findOne({ email })
     .then((user) => {
@@ -31,8 +32,8 @@ const createUser = (req, res, next) => {
         password: hash,
         name,
       })
-        .then((res) => {
-          res.status(200).send({ email: res.email, name: res.name });
+        .then((user) => {
+          res.status(200).send({ email: user.email, name: user.name });
         })
         .catch((err) => {
           console.error(err);
@@ -49,9 +50,11 @@ const createUser = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
+  console.log({ login: req.body });
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
+      console.log({ login: user });
       res.send({
         token: jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: "7d" }),
       });
@@ -63,7 +66,12 @@ const login = (req, res, next) => {
 };
 
 const getCurrentUser = (req, res, next) => {
+  console.log(req);
+  console.log(req.body);
+  console.log(req.user);
+  
   const currentUser = req.user._id; //have to look may need to be just id
+  console.log({ currentUser });
   User.findById(currentUser)
     .orFail(() => {
       const error = new Error("User ID not found");

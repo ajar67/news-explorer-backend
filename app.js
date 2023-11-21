@@ -17,6 +17,7 @@ server.use(express.json());
 server.use(cors());
 server.use(requestLogger);
 
+
 server.use("/users", userRoutes);
 server.use("/articles", articleRoutes);
 server.post("/signup", createUser);

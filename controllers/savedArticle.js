@@ -11,6 +11,7 @@ const getSavedArticles = (req, res, next) => {
     .then((articlesIds) => {
       Article.find({ _id: { $in: articlesIds } })
         .then((articles) => {
+          console.log(articles);
           res.status(200).send({ data: articles });
         })
         .catch((err) => {

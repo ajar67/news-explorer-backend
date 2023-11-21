@@ -22,7 +22,7 @@ const createArticle = (req, res, next) => {
       res.status(200).send({ date: item });
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err, err.name, err.message);
       if (err.name === "CastError") {
         next(new BadRequestError("Invalid ID!"));
       }

@@ -12,7 +12,9 @@ const handleAuthError = (next) => {
 const extractBearerToken = (header) => header.replace("Bearer ", "");
 
 const authorize = (req, res, next) => {
+  console.log({authorize: req.headers});
   const { authorization } = req.headers;
+  console.log({authorization});
   if (!authorization || !authorization.startsWith("Bearer ")) {
     return handleAuthError(res);
   }
