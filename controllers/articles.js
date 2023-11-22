@@ -6,7 +6,6 @@ const {
 } = require("../utils/errors");
 
 const createArticle = (req, res, next) => {
-  //POST
   const { keyword, title, text, date, source, link, image, owner } = req.body;
   Article.create({
     keyword: keyword,
@@ -35,7 +34,6 @@ const createArticle = (req, res, next) => {
 };
 
 const deleteArticle = (req, res, next) => {
-  //DELETE
   const { articleId } = req.params;
   Article.findById(articleId)
     .orFail(() => {

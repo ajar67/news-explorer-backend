@@ -46,7 +46,7 @@ const articleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
-    //select: false; may or may not need it depends on if i want it included when fetching
+    // select: false; may or may not need it depends on if i want it included when fetching
   },
 });
 

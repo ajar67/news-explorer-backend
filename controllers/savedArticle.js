@@ -3,7 +3,6 @@ const Article = require("../models/article");
 const { BadRequestError } = require("../utils/errors");
 
 const getSavedArticles = (req, res, next) => {
-  //GET
   Article.find({ owner: req.user._id })
     .distinct("articleId")
     .then((articlesIds) => {

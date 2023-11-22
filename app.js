@@ -1,6 +1,5 @@
 const express = require("express");
-const helmet = require('helmet');
-const limiter = require("./rateLimiter");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -12,6 +11,7 @@ const {
   createUserValidation,
   createLoginAuthenticationValidation,
 } = require("./middlewares/validation");
+const limiter = require("./rateLimiter");
 
 const userRoutes = require("./routes/user");
 const articleRoutes = require("./routes/article");

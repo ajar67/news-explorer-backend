@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 require("dotenv").config();
 
 const {
@@ -74,13 +74,11 @@ const getCurrentUser = (req, res, next) => {
   console.log(req.body);
   console.log(req.user);
 
-  const currentUser = req.user._id; //have to look may need to be just id
+  const currentUser = req.user._id;
   console.log({ currentUser });
   User.findById(currentUser)
     .orFail(() => {
-      const error = new Error("User ID not found");
-      error.statusCode = NO_DATA_WITH_ID_ERROR;
-      throw error;
+      throw new Error("User ID not found");
     })
     .then((result) => res.status(200).send({ data: result }))
     .catch((err) => {
