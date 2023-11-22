@@ -69,7 +69,7 @@ const getCurrentUser = (req, res, next) => {
   console.log(req);
   console.log(req.body);
   console.log(req.user);
-  
+
   const currentUser = req.user._id; //have to look may need to be just id
   console.log({ currentUser });
   User.findById(currentUser)
