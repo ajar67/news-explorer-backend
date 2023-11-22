@@ -37,15 +37,19 @@ const createUser = (req, res, next) => {
         })
         .catch((err) => {
           console.error(err);
-          if (err.message === "Email already exists!") {
-            next(new ConflictError("Email already exists!"));
-          }
           if (err.name === "ValidationError") {
             next(new BadRequestError("Invalid data!"));
           }
-
           next(err);
         });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.message === "Email already exists!") {
+        next(new ConflictError("Email already exists!"));
+      } else {
+        next(err);
+      }
     });
 };
 

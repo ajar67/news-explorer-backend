@@ -1,12 +1,10 @@
-const savedArticle = require("../models/savedArticleSchema");
 const Article = require("../models/article");
 
 const { BadRequestError } = require("../utils/errors");
 
 const getSavedArticles = (req, res, next) => {
   //GET
-  savedArticle
-    .find({ userId: req.user._id })
+  Article.find({ owner: req.user._id })
     .distinct("articleId")
     .then((articlesIds) => {
       Article.find({ _id: { $in: articlesIds } })

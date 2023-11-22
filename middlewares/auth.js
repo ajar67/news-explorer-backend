@@ -3,10 +3,12 @@ const { UnauthorizedError } = require("../utils/errors");
 require("dotenv").config();
 
 const jwtSecret =
-  process.env.JWT_SECRET ||
-  "dhsgsbrjhufnkwefb4buguiueirgrgkgkfjndffnfbhewwygurgfdhrghfv";
-const handleAuthError = (next) => {
-  next(new UnauthorizedError("Authorization Error"));
+  process.env.JWT_SECRET || "4buguiueirgrgkgkfjndffnfbhewwygurgfdhrghfv";
+
+const handleAuthError = (err, next) => {
+  const errorMessage = err ? err.message : "Authorization Error";
+  console.error("Authorization Error:", errorMessage);
+  return next(new UnauthorizedError(errorMessage));
 };
 
 const extractBearerToken = (header) => header.replace("Bearer ", "");

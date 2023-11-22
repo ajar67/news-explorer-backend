@@ -7,7 +7,7 @@ const {
 
 const createArticle = (req, res, next) => {
   //POST
-  const { keyword, title, text, date, source, link, image } = req.body;
+  const { keyword, title, text, date, source, link, image, owner } = req.body;
   Article.create({
     keyword: keyword,
     title: title,
@@ -16,6 +16,7 @@ const createArticle = (req, res, next) => {
     source: source,
     link: link,
     image: image,
+    owner: owner,
   })
     .then((item) => {
       console.log(item);
@@ -35,14 +36,14 @@ const createArticle = (req, res, next) => {
 
 const deleteArticle = (req, res, next) => {
   //DELETE
-  const { itemId } = req.params;
-  Article.findById(itemId)
+  const { articleId } = req.params;
+  Article.findById(articleId)
     .orFail(() => {
       throw new Error("Item id is not found.");
     })
     .then((item) => {
       console.log(item);
-      if (!item.owner.contains(req.user._id)) {
+      if (!item.owner.equals(req.user._id)) {
         throw new Error("Access to this resource is forbidden.");
       }
       return item.deleteOne().then(() => {
