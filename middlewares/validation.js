@@ -69,9 +69,6 @@ const createArticleValidation = celebrate({
       "string.empty": "The 'imageUrl' field must be filled in",
       "string.uri": "The 'imageUrl' field must be a valid url",
     }),
-    owner: Joi.string().required().messages({
-      "string.empty": "The 'password' field must be filled in",
-    }),
   }),
 });
 
