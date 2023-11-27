@@ -1,8 +1,8 @@
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-require("dotenv").config();
-
+const { JWT_SECRET } = require("../utils/config");
 const {
   BadRequestError,
   UnauthorizedError,
@@ -10,8 +10,7 @@ const {
   ConflictError,
 } = require("../utils/errors");
 
-const jwtSecret =
-  process.env.JWT_SECRET || "4buguiueirgrgkgkfjndffnfbhewwygurgfdhrghfv";
+const jwtSecret = process.env.JWT_SECRET || JWT_SECRET;
 
 const createUser = (req, res, next) => {
   console.log({ body: req.body });
