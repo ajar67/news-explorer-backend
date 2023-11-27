@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../utils/errors");
-require("dotenv").config();
 
 const jwtSecret =
-  process.env.JWT_SECRET || "4buguiueirgrgkgkfjndffnfbhewwygurgfdhrghfv";
+  process.env.JWT_SECRET || "dev-secret";
 
 const handleAuthError = (err, next) => {
   const errorMessage = err ? err.message : "Authorization Error";

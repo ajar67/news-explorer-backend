@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
@@ -13,6 +14,10 @@ const {
 } = require("./middlewares/validation");
 const limiter = require("./rateLimiter");
 
+console.log(process.env.NODE_ENV);
+console.log(process.env.JWT_SECRET);
+console.log(process.env.DATABASE_URL);
+
 const userRoutes = require("./routes/user");
 const articleRoutes = require("./routes/article");
 const { createUser, login } = require("./controllers/users");
@@ -21,7 +26,7 @@ const { PORT = 3002 } = process.env;
 const server = express();
 server.use(helmet());
 server.use(cookieParser());
-mongoose.connect("mongodb://127.0.0.1:27017/final_project");
+mongoose.connect(process.env.DATABASE_URL);
 server.use(express.json());
 server.use(cors());
 server.use(requestLogger);
