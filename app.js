@@ -17,16 +17,19 @@ const limiter = require("./rateLimiter");
 console.log(process.env.NODE_ENV);
 console.log(process.env.JWT_SECRET);
 console.log(process.env.DATABASE_URL);
+console.dir(process.env);
 
 const userRoutes = require("./routes/user");
 const articleRoutes = require("./routes/article");
 const { createUser, login } = require("./controllers/users");
 
 const { PORT = 3002 } = process.env;
+const DATABASE_URL =
+  process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/final_project";
 const server = express();
 server.use(helmet());
 server.use(cookieParser());
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(DATABASE_URL);
 server.use(express.json());
 server.use(cors());
 server.use(requestLogger);
