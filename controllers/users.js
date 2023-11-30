@@ -10,17 +10,17 @@ const {
   ConflictError,
 } = require("../utils/errors");
 
-const jwtSecret = process.env.JWT_SECRET || JWT_SECRET;
-
 const createUser = (req, res, next) => {
   console.log({ body: req.body });
   const { email, password, name } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (!email) {
+        //!user  or !email
         throw new Error("Validation Error");
       }
       if (user) {
+        //!name or user
         throw new Error("Email already exists!");
       }
       return bcrypt.hash(password, 10);
@@ -59,7 +59,7 @@ const login = (req, res, next) => {
     .then((user) => {
       console.log({ login: user });
       res.send({
-        token: jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: "7d" }),
+        token: jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "7d" }),
       });
     })
     .catch((err) => {

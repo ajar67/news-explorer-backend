@@ -14,11 +14,6 @@ const {
 } = require("./middlewares/validation");
 const limiter = require("./rateLimiter");
 
-console.log(process.env.NODE_ENV);
-console.log(process.env.JWT_SECRET);
-console.log(process.env.DATABASE_URL);
-console.dir(process.env);
-
 const userRoutes = require("./routes/user");
 const articleRoutes = require("./routes/article");
 const { createUser, login } = require("./controllers/users");
