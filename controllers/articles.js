@@ -6,13 +6,14 @@ const {
 } = require("../utils/errors");
 
 const createArticle = (req, res, next) => {
-  const { keyword, title, text, date, source, link, image } = req.body;
+  const { keyword, title, text, date, source, author, link, image } = req.body;
   Article.create({
     keyword: keyword,
     title: title,
     text: text,
     date: date,
     source: source,
+    author: author,
     link: link,
     image: image,
     owner: req.user._id,
