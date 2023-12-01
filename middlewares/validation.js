@@ -38,8 +38,8 @@ const createLoginAuthenticationValidation = celebrate({
 const idValidation = celebrate({
   [Segments.PARAMS]: Joi.object({
     articleId: Joi.string().length(24).hex().required().messages({
-      "string.empty": "The 'id' field must be filled in",
-      "string.length": "The 'id' field must have a length of 24",
+      "string.empty": "The 'articleId' field must be filled in",
+      "string.length": "The 'articleId' field must have a length of 24",
     }),
   }),
 });
@@ -47,27 +47,27 @@ const idValidation = celebrate({
 const createArticleValidation = celebrate({
   [Segments.BODY]: Joi.object({
     keyword: Joi.string().required().messages({
-      "string.empty": "The 'email' field must be filled in",
+      "string.empty": "The 'keyword' field must be filled in",
     }),
     title: Joi.string().required().messages({
-      "string.empty": "The 'password' field must be filled in",
+      "string.empty": "The 'title' field must be filled in",
     }),
     text: Joi.string().required().messages({
-      "string.empty": "The 'password' field must be filled in",
+      "string.empty": "The 'text' field must be filled in",
     }),
     date: Joi.string().required().messages({
-      "string.empty": "The 'password' field must be filled in",
+      "string.empty": "The 'date' field must be filled in",
     }),
     source: Joi.string().required().messages({
-      "string.empty": "The 'password' field must be filled in",
+      "string.empty": "The 'source' field must be filled in",
     }),
     link: Joi.string().custom(validateURL).required().messages({
-      "string.empty": "The 'imageUrl' field must be filled in",
-      "string.uri": "The 'imageUrl' field must be a valid url",
+      "string.empty": "The 'link' field must be filled in",
+      "string.uri": "The 'link' field must be a valid url",
     }),
     image: Joi.string().custom(validateURL).required().messages({
-      "string.empty": "The 'imageUrl' field must be filled in",
-      "string.uri": "The 'imageUrl' field must be a valid url",
+      "string.empty": "The 'image' field must be filled in",
+      "string.uri": "The 'image' field must be a valid url",
     }),
   }),
 });
