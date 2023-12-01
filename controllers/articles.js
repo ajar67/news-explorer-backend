@@ -19,7 +19,6 @@ const createArticle = (req, res, next) => {
     owner: req.user._id,
   })
     .then((item) => {
-      console.log(item);
       res.status(200).send({ date: item });
     })
     .catch((err) => {
@@ -36,12 +35,12 @@ const createArticle = (req, res, next) => {
 
 const deleteArticle = (req, res, next) => {
   const { articleId } = req.params;
+  console.log({articleId});
   Article.findById(articleId)
     .orFail(() => {
       throw new Error("Item id is not found.");
     })
     .then((item) => {
-      console.log(item);
       if (!item.owner.equals(req.user._id)) {
         throw new Error("Access to this resource is forbidden.");
       }

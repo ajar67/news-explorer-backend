@@ -5,7 +5,6 @@ const { BadRequestError } = require("../utils/errors");
 const getSavedArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
     .then((articlesIds) => {
-      console.log(articlesIds);
       res.status(200).send({ data: articlesIds });
     })
     .catch((err) => {

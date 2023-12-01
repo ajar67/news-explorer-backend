@@ -57,7 +57,6 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log({ login: user });
       res.send({
         token: jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "7d" }),
       });
@@ -69,12 +68,7 @@ const login = (req, res, next) => {
 };
 
 const getCurrentUser = (req, res, next) => {
-  console.log(req);
-  console.log(req.body);
-  console.log(req.user);
-
   const currentUser = req.user._id;
-  console.log({ currentUser });
   User.findById(currentUser)
     .orFail(() => {
       throw new Error("User ID not found");
