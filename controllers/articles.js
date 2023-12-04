@@ -7,6 +7,7 @@ const {
 
 const createArticle = (req, res, next) => {
   const { keyword, title, text, date, source, author, link, image } = req.body;
+  console.log(req.user);
   Article.create({
     keyword: keyword,
     title: title,
@@ -35,7 +36,7 @@ const createArticle = (req, res, next) => {
 
 const deleteArticle = (req, res, next) => {
   const { articleId } = req.params;
-  console.log({articleId});
+  console.log({ articleId });
   Article.findById(articleId)
     .orFail(() => {
       throw new Error("Item id is not found.");
