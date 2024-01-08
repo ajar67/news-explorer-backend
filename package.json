@@ -1,0 +1,44 @@
+{
+  "name": "news-explorer-backend",
+  "version": "1.0.0",
+  "description": "backend for my final project",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajar67/news-explorer-backend.git"
+  },
+  "author": "anthony ranieri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajar67/news-explorer-backend/issues"
+  },
+  "homepage": "https://github.com/ajar67/news-explorer-backend",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "celebrate": "^15.0.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.4",
+    "express-winston": "^4.2.0",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^6.6.1",
+    "validator": "^13.11.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "nodemon": "^3.0.1"
+  }
+}
